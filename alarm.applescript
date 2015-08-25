@@ -1,67 +1,41 @@
-set AppleTVName to "Bedroom Apple TV"
-set PlaylistName to "Alarm"
+set AirplayDeviceName to "HK Aura WF"
+set PlaylistName to "alarm"
 
-activate application "iTunes"
-delay 0.2
-
-tell application "System Events"
-	tell application "iTunes"
-		set visible of front browser window to true
-		set the view of the front browser window to playlist PlaylistName
-	end tell
-	delay 0.2
+tell application "System Preferences"
+	reveal anchor "output" of pane id "com.apple.preference.sound"
+	#activate
 	
-	tell window "iTunes" of application process "iTunes"
-		click button 10 of window "iTunes" of application process "iTunes" of application "System Events"
-		key code 125 using {command down}
-		delay 0.2
-		keystroke return
-		delay 0.2
-		tell window "Multiple Speakers" of application process "iTunes" of application "System Events"
-			activate
-			
-			tell table 1 of scroll area 1
-				activate
-				
-				repeat with i from 1 to (count of every row)
-					set rowcount to count of rows
-					if rowcount > 1 then
-						tell group 1 of row i
-							activate
-							if description of checkbox 1 as string = AppleTVName and value of checkbox 1 = 0 then
-								click checkbox 1
-								delay 0.2
-							end if
-						end tell
-					end if
-				end repeat
-				
-				repeat with i from 1 to (count of every row)
-					set rowcount to count of rows
-					if rowcount > 1 then
-						tell group 1 of row i
-							activate
-							if description of checkbox 1 as string is not equal to AppleTVName and value of checkbox 1 = 1 then
-								click checkbox 1
-								delay 0.2
-							end if
-						end tell
-					end if
-				end repeat
-				
-			end tell
+	tell application "System Events"
+		tell process "System Preferences"
+			select (row 1 of table 1 of scroll area 1 of tab group 1 of window "Sound" whose value of text field 1 is AirplayDeviceName)
 		end tell
 	end tell
 	
-	tell window "Multiple Speakers" of application process "iTunes" of application "System Events"
-		activate
-		click button 3
-	end tell
-	
+	quit
 end tell
 
+delay 2.0
+set volume output volume 40 --100%
+
+activate application "iTunes"
+delay 1.0
+
+tell application "System Events" to perform action "AXPress" of (first menu item of process "iTunes"'s menu bar 1's menu bar item "Controls"'s menu 1's menu item "Repeat"'s menu 1 whose name ends with "All")
+tell application "System Events" to perform action "AXPress" of (first menu item of process "iTunes"'s menu bar 1's menu bar item "Controls"'s menu 1's menu item "Shuffle"'s menu 1 whose name ends with "On")
+
 tell application "iTunes"
-	set shuffle of playlist PlaylistName to 1
-	play playlist PlaylistName
-	set the sound volume to 80
+	try
+		play playlist PlaylistName
+		
+		set currentVolume to 10
+		repeat while currentVolume ² 100
+			set the sound volume to currentVolume
+			set currentVolume to currentVolume + 10
+			delay 10.0
+		end repeat
+	on error
+		set the sound volume to 100
+		set backupFile to POSIX file "/System/Library/Sounds/Sosumi.aiff"
+		open backupFile
+	end try
 end tell
