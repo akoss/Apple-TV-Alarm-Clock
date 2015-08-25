@@ -8,7 +8,7 @@ Instructions
 ============
 
 This script is compatible with iTunes 12.2 
-To use it you'll first need to allow AppleScript to make keypresses on your behalf. Open System Preferences and go to Universal Access - Assistive Devices. 
+To use it you'll first need to allow AppleScript to make keypresses on your behalf. Open System Preferences and go to Security & Privacy - Privacy - Accessibility. 
 
 If you want to play songs from Apple Music or iTunes Match, make sure to download them first. 
 

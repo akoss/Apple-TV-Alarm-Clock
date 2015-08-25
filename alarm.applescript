@@ -1,5 +1,11 @@
 set AirplayDeviceName to "HK Aura WF"
-set PlaylistName to "alarm"
+set PlaylistName to "Morning Alarm"
+
+set MinVolume to 10
+set MaxVolume to 100
+set SystemVolume to 40
+set VolumeIncreaseDelay to 10.0
+set VolumeIncrease to 10
 
 tell application "System Preferences"
 	reveal anchor "output" of pane id "com.apple.preference.sound"
@@ -15,7 +21,7 @@ tell application "System Preferences"
 end tell
 
 delay 2.0
-set volume output volume 40 --100%
+set volume output volume SystemVolume --100%
 
 activate application "iTunes"
 delay 1.0
@@ -27,11 +33,11 @@ tell application "iTunes"
 	try
 		play playlist PlaylistName
 		
-		set currentVolume to 10
-		repeat while currentVolume ² 100
+		set currentVolume to MinVolume
+		repeat while currentVolume ² MaxVolume
 			set the sound volume to currentVolume
-			set currentVolume to currentVolume + 10
-			delay 10.0
+			set currentVolume to currentVolume + VolumeIncrease
+			delay VolumeIncreaseDelay
 		end repeat
 	on error
 		set the sound volume to 100
