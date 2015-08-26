@@ -12,6 +12,9 @@ To use it you'll first need to allow AppleScript to make keypresses on your beha
 
 If you want to play songs from Apple Music or iTunes Match, make sure to download them first. 
 
+Follow this post to schedule this script: http://apple.stackexchange.com/questions/59257/ical-no-longer-runs-scripts
+To schedule a Mac to wake up at a certain time, go to System Preferences - Energy Saver - Schedule. 
+
 Note: This version changes the main output device of OS X. Hold down Option and click on Volume Control in OS X's menu bar to select another output device. 
 
 
