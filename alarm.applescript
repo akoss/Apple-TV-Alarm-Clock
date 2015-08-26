@@ -1,3 +1,5 @@
+#! /usr/bin/osascript
+
 set AirplayDeviceName to "HK Aura WF"
 set PlaylistName to "Morning Alarm"
 
